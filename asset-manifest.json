@@ -1,0 +1,25 @@
+{
+  "files": {
+    "main.css": "/static/css/main.de5aec68.css",
+    "main.js": "/static/js/main.c0bd3a73.js",
+    "static/js/787.5530211c.chunk.js": "/static/js/787.5530211c.chunk.js",
+    "static/media/Inter-Medium.woff2": "/static/media/Inter-Medium.293fd13dbca5a3e450ef.woff2",
+    "static/media/Inter-Black.woff2": "/static/media/Inter-Black.15ca31c0a2a68f76d2d1.woff2",
+    "static/media/Inter-Regular.woff2": "/static/media/Inter-Regular.c8ba52b05a9ef10f4758.woff2",
+    "static/media/header-logo.svg": "/static/media/header-logo.bc3450ffaa676172ae9a.svg",
+    "static/media/element-like-disabled.svg": "/static/media/element-like-disabled.cbed5331d270056562b2.svg",
+    "index.html": "/index.html",
+    "static/media/element-trash-icon.svg": "/static/media/element-trash-icon.ce3b64935accf9b8212e.svg",
+    "static/media/element-like-active.svg": "/static/media/element-like-active.35948469632d0421d697.svg",
+    "static/media/popup-close-icon.svg": "/static/media/popup-close-icon.973e77374abfb705de40.svg",
+    "static/media/profile-edit.svg": "/static/media/profile-edit.6c7bf05444b9793fdf6e.svg",
+    "static/media/profile-add.svg": "/static/media/profile-add.bed8c136e13907f5eefb.svg",
+    "main.de5aec68.css.map": "/static/css/main.de5aec68.css.map",
+    "main.c0bd3a73.js.map": "/static/js/main.c0bd3a73.js.map",
+    "787.5530211c.chunk.js.map": "/static/js/787.5530211c.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.de5aec68.css",
+    "static/js/main.c0bd3a73.js"
+  ]
+}
