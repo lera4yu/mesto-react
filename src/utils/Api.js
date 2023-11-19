@@ -32,21 +32,20 @@ class Api {
   };
 
   //обновление информации о пользователе на сервере 
-  updateUserInfo(userInfo) {
+  setUserInfo(userInfo) {
     return this._checkStatus(
       fetch(`${this._url}/users/me`, {
         method: 'PATCH',
         headers: this._headers,
         body: JSON.stringify({
           name: userInfo.name,
-          about: userInfo.caption
+          about: userInfo.about
         })
       }))
   };
 
   //обновление аватара профиля
-
-  updateAvatar(avatarUrl) {
+  setUserAvatar(avatarUrl) {
     return this._checkStatus(
       fetch(`${this._url}/users/me/avatar`, {
         method: 'PATCH',
@@ -58,14 +57,14 @@ class Api {
   };
 
   //добавление новой карточки на сервер
-  addNewCard({ titlePopup, linkPopup }) {
+  addNewCard({ name, link}) {
     return this._checkStatus(
       fetch(`${this._url}/cards`, {
         method: 'POST',
         headers: this._headers,
         body: JSON.stringify({
-          name: titlePopup,
-          link: linkPopup
+          name: name,
+          link: link
         })
       }))
   };
@@ -94,13 +93,22 @@ class Api {
 
   //удаление лайка на карточке
 
-
   deleteLike(cardId) {
     return this._checkStatus(
       fetch(`${this._url}/cards/${cardId}/likes`, {
         headers: this._headers,
         method: 'DELETE'
       }))
+  }
+
+  //toggle лайка на карточке
+
+  changeLikeCardStatus(cardId, isNotLiked) {
+    if (isNotLiked) {
+      return this.addLike(cardId);
+    } else {
+      return this.deleteLike(cardId);
+    }
   }
 }
 

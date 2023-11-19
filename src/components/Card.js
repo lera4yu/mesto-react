@@ -1,7 +1,29 @@
-function Card({ card, onCardClick }) {
+import { useContext } from "react";
+import { CurrentUserContext } from "../contexts/CurrentUserContext";
+
+function Card({ card, onCardClick, onDeleteClick, onLikeClick }) {
+  const currentUser = useContext(CurrentUserContext);
+
   function handleClick() {
     onCardClick(card);
   }
+
+  function handleDeleteClick() {
+    onDeleteClick(card._id);
+  }
+
+  function handleCardLike() {
+    onLikeClick(card);
+  }
+
+  //добавляем кнопку удаления только для своих карточек
+  const isOwn = card.owner._id === currentUser._id;
+
+  //проверяем, ставили ли мы лайки этой карточке
+  const isLiked = card.likes.some(i => i._id === currentUser._id);
+  const cardLikeButtonClassName = (
+    `element__like-btn ${isLiked && 'element__like-btn_active'}`
+  );
 
   return (
     <article className="element">
@@ -10,14 +32,14 @@ function Card({ card, onCardClick }) {
       <div className="element__info">
         <h2 className="element__title">{card.name}</h2>
         <div className="element__like">
-          <button className="element__like-btn" type="button" />
+          <button className= {cardLikeButtonClassName} onClick = {handleCardLike} />
           {card.likes.length > 0
             ? <h3 className='element__like-count element__like-count_opened'>{card.likes.length}</h3>
             : null
           }
         </div>
       </div>
-      <button className="element__trash-btn" type="button" />
+      { isOwn && <button className='element__trash-btn' onClick={handleDeleteClick} /> }
     </article>
   )
 }
