@@ -8,8 +8,13 @@ function AddPlacePopup(props) {
 
   function handleSubmit(e) {
     e.preventDefault();
-    props.onAddNewPlace({link: placeLinkRef.current.value, name: placeNameRef.current.value});
+    props.onAddNewPlace({ link: placeLinkRef.current.value, name: placeNameRef.current.value });
   }
+
+  React.useEffect(() => {
+    placeLinkRef.current.value = "";
+    placeNameRef.current.value = "";
+  }, [props.isOpen])
 
   return (
     <PopupWithForm name='card' title='Новое место' isOpen={props.isOpen} onClose={props.onClose} buttonText="Создать"
@@ -21,8 +26,8 @@ function AddPlacePopup(props) {
         placeholder="Название"
         className="popup__text popup__text_type_title-card"
         name="titlePopup"
-        required= {true}
-        ref = {placeNameRef}
+        required={true}
+        ref={placeNameRef}
       />
       <span className="popup__error" id="titlePopup-error" />
       <input
@@ -30,8 +35,8 @@ function AddPlacePopup(props) {
         placeholder="Ссылка на картинку"
         className="popup__text popup__text_type_link-card"
         name="linkPopup"
-        required= {true}
-        ref = {placeLinkRef}
+        required={true}
+        ref={placeLinkRef}
       />
       <span className="popup__error" id="linkPopup-error" />
     </PopupWithForm>

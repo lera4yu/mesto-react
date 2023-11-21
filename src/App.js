@@ -14,20 +14,24 @@ function App() {
   const [currentUser, setCurrentUser] = React.useState({ name: '', about: '' });
 
   React.useEffect(() => {
-    api.getUserInfo().then((res) => {
-      setCurrentUser(res);
-    }).catch((err) =>
-      console.log(`Получение информации о пользователе привело к ошибке ${err}`)
-    )
+    api.getUserInfo()
+      .then((res) => {
+        setCurrentUser(res);
+      })
+      .catch((err) =>
+        console.log(`Получение информации о пользователе привело к ошибке ${err}`)
+      )
   }, []);
 
   const [cards, setCards] = React.useState([]);
 
   React.useEffect(() => {
-    api.getInitialCards().then((res) => {
-      setCards(res);
-    }).catch((err) =>
-      console.log(`Получение информации о дефолтных карточках привело к ошибке ${err}`));
+    api.getInitialCards()
+      .then((res) => {
+        setCards(res);
+      })
+      .catch((err) =>
+        console.log(`Получение информации о дефолтных карточках привело к ошибке ${err}`));
   }, []);
 
   const [isEditAvatarPopupOpen, setEditAvatarPopupOpen] = React.useState(false);
@@ -59,33 +63,49 @@ function App() {
     const isLiked = card.likes.some(i => i._id === currentUser._id);
 
     // Отправляем запрос в API и получаем обновлённые данные карточки
-    api.changeLikeCardStatus(card._id, !isLiked).then((newCard) => {
-      setCards((state) => state.map((c) => c._id === card._id ? newCard : c));
-    });
+    api.changeLikeCardStatus(card._id, !isLiked)
+      .then((newCard) => {
+        setCards((state) => state.map((c) => c._id === card._id ? newCard : c));
+      })
+      .catch((err) => {
+        console.log(`Обновление карточки с поставленным/снятым лайком привело к ошибке ${err}`);
+      });
   }
 
   function handleCardDelete(cardId) {
     api.deleteCard(cardId)
-      .then((response) => setCards((state) => state.filter((c) => c._id !== cardId)));
+      .then((response) => setCards((state) => state.filter((c) => c._id !== cardId)))
+      .catch((err) => {
+        console.log(`Удаление карточки привело к ошибке ${err}`);
+      });
   }
 
   function handleUpdateUser(userInfo) {
     api.setUserInfo(userInfo)
       .then((res) => setCurrentUser(res))
-      .then((res) => closeAllPopups());
+      .then((res) => closeAllPopups())
+      .catch((err) => {
+        console.log(`Обновление данных пользователя привело к ошибке ${err}`);
+      });
   }
 
   function handleUpdateAvatar(avatar) {
     api.setUserAvatar(avatar)
       .then((res) => setCurrentUser(res))
-      .then((res) => closeAllPopups());
+      .then((res) => closeAllPopups())
+      .catch((err) => {
+        console.log(`Обновление аватара пользователя привело к ошибке ${err}`);
+      });
   }
 
   function handleAddPlaceSubmit(card) {
     api.addNewCard(card)
-    .then((newCard) => setCards([newCard, ...cards]))
-    .then((res) => closeAllPopups());
-    }
+      .then((newCard) => setCards([newCard, ...cards]))
+      .then((res) => closeAllPopups())
+      .catch((err) => {
+        console.log(`Добавление новой карточки привело к ошибке ${err}`);
+      });
+  }
 
   React.useEffect(() => {
     function handleEscClose(evt) {
@@ -126,7 +146,7 @@ function App() {
             onCardClick={handleCardClick} onLikeClick={handleCardLike} onDeleteClick={handleCardDelete} />
           <Footer />
           <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} onUpdateUser={handleUpdateUser} />
-          <AddPlacePopup isOpen={isAddPlacePopupOpen} onClose={closeAllPopups} onAddNewPlace={handleAddPlaceSubmit}/>
+          <AddPlacePopup isOpen={isAddPlacePopupOpen} onClose={closeAllPopups} onAddNewPlace={handleAddPlaceSubmit} />
           {selectedCard.name && selectedCard.link ? (<ImagePopup card={selectedCard} onClose={closeAllPopups} />) : null}
           <PopupWithForm name='delete-card' title='Вы уверены?' buttonText="Да" buttonClass=" btnPopup-delete-card" />
           <EditAvatarPopup isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups}
